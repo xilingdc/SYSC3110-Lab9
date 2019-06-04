@@ -1,0 +1,14 @@
+<?xml version="1.0"?> 
+<project name="Build" default=""> 
+	
+	
+	<target name="compile">
+	    <javac srcdir="source" destdir="out" source="1.8" target="1.8">
+	</javac>
+		</target>
+	
+	<target name ="packaging">
+	     
+	</target>
+	
+</project> 
