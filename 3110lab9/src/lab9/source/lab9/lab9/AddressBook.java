@@ -1,4 +1,4 @@
-package lab9;
+package lab9.source.lab9.lab9;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -75,16 +75,14 @@ public class AddressBook implements Serializable {
 	}
 
 	public void writeObject(BuddyInfo a) {
-         // through Serializable
+         // through Serialization
 		try {
 			ObjectOutputStream p = new ObjectOutputStream(new FileOutputStream("ossjbk.txt"));
 			p.writeObject(a);
 			p.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -150,7 +148,6 @@ public class AddressBook implements Serializable {
         a.exportToTextFile("ojbk.txt");
 		a.exportToXMLFile("kkkk.txt");
 		a.readFile("ojbk.txt");
-		
 		a.writeObject(aa);
 		a.readObject();		
 		System.out.println("........");

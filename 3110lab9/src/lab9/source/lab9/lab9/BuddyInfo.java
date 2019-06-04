@@ -1,4 +1,4 @@
-package lab9;
+package lab9.source.lab9.lab9;
 
 import java.io.Serializable;
 import java.util.Scanner;
