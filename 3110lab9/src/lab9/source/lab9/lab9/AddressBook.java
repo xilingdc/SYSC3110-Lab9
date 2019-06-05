@@ -12,11 +12,14 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.swing.plaf.synth.SynthSpinnerUI;
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -63,9 +66,8 @@ public class AddressBook implements Serializable {
 	}
 
 	public void exportToTextFile(String filename) { // through bufferwriter
-		BufferedWriter out = null;
 		try {
-			out = new BufferedWriter(new FileWriter(filename));
+			BufferedWriter out = new BufferedWriter(new FileWriter(filename));
 			out.write(this.toString());
 			out.close();
 		} catch (IOException e) {
@@ -133,12 +135,18 @@ public class AddressBook implements Serializable {
 	}
 	
 	public void importFromXMlFile(String path)throws SAXException, IOException, ParserConfigurationException{
-
-		Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new FileInputStream(path));
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = factory.newDocumentBuilder();
+		Document doc = builder.parse(new FileInputStream(path));
 		NodeList list = doc.getElementsByTagName("book");
 		for(int i = 0; i < list.getLength(); i++){
-			addressbook.add(BuddyInfo.creates((Element)list.item(i)));
+			Node p = list.item(i);			
+			Element l = (Element) p;
+			System.out.println(l.getTextContent());			
+			//addressbook.add(BuddyInfo.creates((Element)list.item(i)));
 		}
+	//	System.out.println("XML");
+	//	System.out.println(addressbook.toString());
 	}
 	
 	public static void main(String[] args) throws IOException {
@@ -146,7 +154,18 @@ public class AddressBook implements Serializable {
 		BuddyInfo aa = new BuddyInfo("xy","119","3167865896");
         a.addBuddy(aa);
         a.exportToTextFile("ojbk.txt");
-		a.exportToXMLFile("kkkk.txt");
+		a.exportToXMLFile("kkkk.xml");
+		
+		try {
+			a.importFromXMlFile("kkkk.xml");
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		a.readFile("ojbk.txt");
 		a.writeObject(aa);
 		a.readObject();		
